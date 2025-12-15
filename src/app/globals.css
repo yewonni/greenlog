@@ -72,4 +72,9 @@
   .hover-green:hover {
     background-color: var(--color-bg-green-hover);
   }
+
+  .active-primary:active {
+    background-color: var(--color-primary);
+    color: white;
+  }
 }
