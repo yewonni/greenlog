@@ -14,7 +14,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    "rounded-3xl font-medium leading-snug focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+    "cursor-pointer rounded-3xl font-medium leading-snug focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variantStyles = {
     primary: "bg-primary text-white hover-primary",
@@ -49,7 +49,7 @@ type ViewAllButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ViewAllButton({ className, ...props }: ViewAllButtonProps) {
   const styles =
-    "bg-green hover-green text-sm text-secondary font-semibold rounded-full px-4 py-2 transition duration-300";
+    "cursor-pointer bg-green hover-green text-sm text-secondary font-semibold rounded-full px-4 py-2 transition duration-300";
 
   return (
     <button className={clsx(styles, className)} {...props}>
