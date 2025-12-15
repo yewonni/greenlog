@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   return (
     <div
       className="relative w-screen h-screen overflow-hidden flex flex-col lg:flex-row lg:justify-end"
@@ -13,7 +18,14 @@ export default function LoginPage() {
     >
       {/* text - for desktop */}
       <div className="hidden lg:flex flex-col gap-4 absolute bottom-[13%] left-[5%] z-30">
-        <Image src="/icons/logo-white.svg" alt="logo" width={239} height={63} />
+        <Image
+          src="/icons/logo-white.svg"
+          alt="logo"
+          width={239}
+          height={63}
+          className="cursor-pointer"
+          onClick={() => router.push("/")}
+        />
         <p className="text-xl font-medium text-white/70">
           작은 성장들이 쌓여, 나를 닮은 정원을 만듭니다.
         </p>
@@ -60,8 +72,10 @@ export default function LoginPage() {
             로그인
           </button>
         </form>
-
-        <p className="text-sm text-secondary hover:underline cursor-pointer">
+        <p
+          className="text-sm text-secondary hover:underline cursor-pointer"
+          onClick={() => router.push("/join")}
+        >
           계정이 없으신가요?
         </p>
       </section>
