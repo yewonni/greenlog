@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nickname  String
+  createdAt DateTime @default(now())
+}
+
+model PlantType {
+  id       Int       @id @default(autoincrement())
+  name     String
+  myPlants MyPlant[]
+}
+
+model CareRoutine {
+  id          Int      @id @default(autoincrement())
+  type        RoutineType
+  label       String
+  cycleDays   Int
+
+  waterPlants MyPlant[] @relation("Water")
+  repotPlants MyPlant[] @relation("Repot")
+}
+
+model MyPlant {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  plantTypeId    Int
+  nickname       String
+  imageUrl       String?
+  waterRoutineId Int
+  repotRoutineId Int
+  plantedAt      DateTime
+
+  plantType    PlantType   @relation(fields: [plantTypeId], references: [id])
+  waterRoutine CareRoutine @relation("Water", fields: [waterRoutineId], references: [id])
+  repotRoutine CareRoutine @relation("Repot", fields: [repotRoutineId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum RoutineType {
+  WATER
+  REPOT
+}
