@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import CircleCheckbox from "@/components/CircleCheckbox";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [rememberId, setRememberId] = useState(false);
 
   return (
     <div
@@ -26,7 +29,7 @@ export default function LoginPage() {
           className="cursor-pointer"
           onClick={() => router.push("/")}
         />
-        <p className="text-xl font-medium text-white/70">
+        <p className="text-xl text-white/70">
           작은 성장들이 쌓여, 나를 닮은 정원을 만듭니다.
         </p>
       </div>
@@ -41,9 +44,7 @@ export default function LoginPage() {
           className="-mt-28 lg:mt-0"
         />
 
-        <h2 className="text-secondary text-3xl lg:text-[40px] font-semibold">
-          Sign In
-        </h2>
+        <h2 className="text-secondary text-3xl lg:text-[40px]">Sign In</h2>
 
         <form className="flex flex-col gap-6 w-full max-w-[370px] lg:w-[370px] lg:max-w-[500px] mt-5">
           <label htmlFor="login-id" className="sr-only">
@@ -53,7 +54,7 @@ export default function LoginPage() {
             id="login-id"
             type="text"
             placeholder="아이디를 입력해주세요."
-            className="w-full border border-primary p-3 rounded-lg"
+            className="w-full border border-primary p-3 rounded-lg bg-white"
           />
 
           <label htmlFor="login-password" className="sr-only">
@@ -63,15 +64,29 @@ export default function LoginPage() {
             id="login-password"
             type="password"
             placeholder="비밀번호를 입력해주세요"
-            className="w-full border border-primary p-3 rounded-lg"
+            className="w-full border border-primary p-3 rounded-lg bg-white"
           />
 
-          <p className="text-right text-secondary">아이디 저장</p>
+          {/* 아이디 저장 */}
+          <div className="flex items-center gap-2 justify-end">
+            <CircleCheckbox
+              checked={rememberId}
+              onChange={setRememberId}
+              size={20}
+            />
+            <p
+              className="text-secondary cursor-pointer select-none"
+              onClick={() => setRememberId((prev) => !prev)}
+            >
+              아이디 저장
+            </p>
+          </div>
 
           <button className="bg-secondary text-white py-3 rounded-3xl">
             로그인
           </button>
         </form>
+
         <p
           className="text-sm text-secondary hover:underline cursor-pointer"
           onClick={() => router.push("/join")}
