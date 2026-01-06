@@ -4,10 +4,23 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import CircleCheckbox from "@/components/CircleCheckbox";
+import Button from "@/components/Button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/schemas/auth/login.schema";
 
 export default function LoginPage() {
   const router = useRouter();
   const [rememberId, setRememberId] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    mode: "onChange",
+  });
 
   return (
     <div
@@ -47,15 +60,21 @@ export default function LoginPage() {
         <h2 className="text-secondary text-3xl lg:text-[40px]">Sign In</h2>
 
         <form className="flex flex-col gap-6 w-full max-w-[370px] lg:w-[370px] lg:max-w-[500px] mt-5">
-          <label htmlFor="login-id" className="sr-only">
-            아이디
+          <label htmlFor="login-email" className="sr-only">
+            이메일
           </label>
           <input
-            id="login-id"
+            id="login-email"
             type="text"
-            placeholder="아이디를 입력해주세요."
+            {...register("email")}
+            placeholder="이메일 입력해주세요."
             className="w-full border border-primary p-3 rounded-lg bg-white"
           />
+          {errors.email && (
+            <p className="text-sm -mt-2 pl-2 text-primary">
+              {errors.email.message}
+            </p>
+          )}
 
           <label htmlFor="login-password" className="sr-only">
             비밀번호
@@ -63,9 +82,15 @@ export default function LoginPage() {
           <input
             id="login-password"
             type="password"
+            {...register("password")}
             placeholder="비밀번호를 입력해주세요"
             className="w-full border border-primary p-3 rounded-lg bg-white"
           />
+          {errors.password && (
+            <p className="text-sm -mt-2 pl-2 text-primary">
+              {errors.password.message}
+            </p>
+          )}
 
           {/* 아이디 저장 */}
           <div className="flex items-center gap-2 justify-end">
@@ -81,10 +106,9 @@ export default function LoginPage() {
               아이디 저장
             </p>
           </div>
-
-          <button className="bg-secondary text-white py-3 rounded-3xl">
+          <Button variant="dark" size="lg" disabled={!(isValid && isDirty)}>
             로그인
-          </button>
+          </Button>
         </form>
 
         <p
